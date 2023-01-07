@@ -1,0 +1,37 @@
+{
+  "variables": {
+    "project_id": "",
+    "zone": ""
+  },
+  "builders": [
+    {
+      "type": "googlecompute",
+      "account_file": "{{user `gcp_account_file`}}",
+      "project_id": "{{user `project_id`}}",
+      "source_image_family": "ubuntu-2004-lts",
+      "zone": "{{user `zone`}}",
+      "ssh_username": "{{user `ssh_username`}}"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "sudo apt-get update",
+        "sudo apt-get install -y containerd kubelet kubeadm kubectl",
+        "sudo systemctl enable containerd",
+        "sudo systemctl start containerd"
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "googlecompute",
+      "account_file": "{{user `gcp_account_file`}}",
+      "project_id": "{{user `project_id`}}",
+      "zone": "{{user `zone`}}",
+      "name": "kubernetes-{{timestamp}}",
+      "family": "kubernetes"
+    }
+  ]
+}
