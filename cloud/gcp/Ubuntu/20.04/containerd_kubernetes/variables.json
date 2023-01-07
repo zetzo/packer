@@ -1,0 +1,6 @@
+{
+  "gcp_account_file": "path/to/gcp/account/file.json",
+  "ssh_username": "your-ssh-username",
+  "project_id": "your-gcp-project-id",
+  "zone": "your-gcp-zone"
+}
